@@ -4,10 +4,10 @@
       <router-link href="#" class="navbar-brand" to="books">Books</router-link>
       <form class="d-flex align-items-baseline">
         <p>
-          Wishlist Books: {{ booksCount }} Book{{
-            totalPrice != 1 ? "s" : ""
+          Wishlist Books: {{ bookStore.getWishListCount() }} Book{{
+            bookStore.getWishListCount() != 1 ? "s" : ""
           }}
-          | Total: {{ totalPrice }}
+          | Total: {{ bookStore.getTotalPrice() }}
         </p>
         <router-link class="btn btn-outline-success mx-2" to="cart"
           >WishList</router-link
@@ -17,28 +17,15 @@
   </nav>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { useBookStore } from '@/store/index'
 
 export default {
   data:()=>({
-      booksCount: 0,
-      totalPrice: 0,
+      bookStore: null
   }),
-  methods: {
-    ...mapActions(["getWishListCount", "getTotalPrice"]),
-    getData(){
-      this.getWishListCount()
-        .then((data)=>{
-          this.booksCount = data;
-        })
-      this.getTotalPrice()
-        .then((data)=>{
-          this.totalPrice = data;
-        })
-    }
-  },
+
   beforeMount(){
-    this.getData()
+    this.bookStore = useBookStore();
   }
 };
 </script>

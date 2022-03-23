@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in wishlist" :key="item.book.id">
+        <tr v-for="item in bookStore.wishlist" :key="item.book.id">
           <th>{{ item.book.id }}</th>
           <td>{{ item.book.name }}</td>
           <td>{{ item.book.author }}</td>
@@ -19,21 +19,21 @@
             {{ item.quantity }}
             <button
               class="btn btn-success"
-              :disabled="!canIncrement(item)"
-              @click="addToWishList(item.book)"
+              :disabled="!bookStore.canIncrement(item)"
+              @click="bookStore.addToWishList(item.book)"
             >
               +
             </button>
             |
-            <button class="btn btn-danger" @click="decreaseQty(item)">-</button>
+            <button class="btn btn-danger" @click="bookStore.decreaseQty(item)">-</button>
           </td>
-          <td>{{ formatMoney(item.book.price) }}</td>
-          <td>{{ formatMoney(item.quantity * item.book.price) }}</td>
+          <td>{{ bookStore.formatMoney(item.book.price) }}</td>
+          <td>{{ bookStore.formatMoney(item.quantity * item.book.price) }}</td>
         </tr>
 
         <tr>
           <th colspan="3">Total Price:</th>
-          <th colspan="3">{{ formatMoney(getTotalPrice()) }}</th>
+          <th colspan="3">{{ bookStore.getTotalPrice() }}</th>
         </tr>
         <tr>
           <th colspan="3"></th>
@@ -44,3 +44,17 @@
       </tbody>
     </table>
 </template>
+
+<script>
+import { useBookStore } from '@/store/index'
+
+export default {
+  data: () => ({
+    bookStore: null
+  }),
+  beforeMount() {
+    this.bookStore = useBookStore();
+  }, 
+}
+
+</script>

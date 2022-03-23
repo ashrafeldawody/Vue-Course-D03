@@ -6,11 +6,7 @@
     ]"
     style="width: 30%; min-width: 300px"
   >
-    <img
-      :src="getPic(book.image)"
-      style="max-height: 260px"
-      class="card-img-top"
-    />
+    <img :src="getPic(book.image)" style="max-height: 260px" class="card-img-top" />
     <div class="card-body">
       <h5 class="card-title text-center">{{ book.name }}</h5>
       <p>Category: {{ book.category }}</p>
@@ -23,16 +19,29 @@
     <div class="card-footer">
       <button
         class="btn btn-success float-end"
-        :disabled="checkExist(book.id)"
-        @click="addToWishList(book)"
-      >
-        Add to Wishlist
-      </button>
+        :disabled="bookStore.checkExist(book.id)"
+        @click="bookStore.addToWishList(book)"
+      >Add to Wishlist</button>
     </div>
   </div>
 </template>
 <script>
+import { useBookStore } from "@/store/index";
+
 export default {
-  props:['book']
-}
+  data: () => ({
+    bookStore: null
+  }),
+
+  beforeMount() {
+    this.bookStore = useBookStore();
+    console.log(this.bookStore);
+  },
+  props: ["book"],
+  methods: {
+    getPic(pic) {
+      return require("../assets/" + pic);
+    }
+  }
+};
 </script>

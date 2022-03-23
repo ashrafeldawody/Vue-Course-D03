@@ -1,19 +1,23 @@
 <template>
-  <div class="container">
     <div class="books d-flex flex-wrap">
-      <Book v-for="book in $store.state.books" :key="book.id" :book = "book.id"></Book>
+      <Book v-for="book in bookStore.books" :key="book.id" :book="book"></Book>
     </div>
-  </div>
 </template>
 
 <script>
-import Book from './BookComponent.vue'
+import { useBookStore } from "@/store/index";
+
+import Book from "./BookComponent.vue";
 export default {
-  data:()=>({
-    
+  data: () => ({
+    bookStore: null
   }),
-  components:{
+  beforeMount() {
+    this.bookStore = useBookStore();
+  },
+  components: {
     Book
-  }
-}
+  },
+
+};
 </script>
