@@ -38,7 +38,7 @@
         <tr>
           <th colspan="3"></th>
           <th colspan="3">
-            <button class="btn btn-primary" @click="cashout">CashOut</button>
+            <button class="btn btn-primary" @click="bookStore.cashout()">CashOut</button>
           </th>
         </tr>
       </tbody>
